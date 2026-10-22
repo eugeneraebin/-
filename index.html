@@ -56,12 +56,84 @@
 @keyframes fadeIn{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
 
 
-/* Full-screen phone mode: no side instructions, phone fills the viewport */
-html, body { width:100%; height:100%; min-height:100%; margin:0!important; padding:0!important; overflow:hidden!important; }
-body { display:flex!important; align-items:stretch!important; justify-content:stretch!important; background:#000!important; }
-#phone, .phone, .device { width:100vw!important; height:100dvh!important; max-width:none!important; max-height:none!important; min-width:0!important; min-height:0!important; margin:0!important; border:0!important; border-radius:0!important; box-shadow:none!important; }
-#screen { width:100%!important; height:100%!important; min-height:0!important; border-radius:0!important; overflow:hidden!important; }
-.helper, .side-text, .instructions, .intro, .description { display:none!important; }
+
+/* Full-screen iPhone mode */
+html,
+body {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+body {
+  display: flex !important;
+  align-items: stretch !important;
+  justify-content: stretch !important;
+  background: #000 !important;
+}
+
+.layout {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+
+.phone {
+  width: 100vw !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  max-width: none !important;
+  max-height: none !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.screen {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  border-radius: 0 !important;
+  overflow: hidden;
+}
+
+.content {
+  flex: 1;
+  min-height: 0;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.helper,
+.side-text,
+.instructions,
+.intro,
+.description {
+  display: none !important;
+}
+
+button,
+input,
+textarea {
+  touch-action: manipulation;
+}
+
+@supports (height: 100dvh) {
+  .phone {
+    height: 100dvh !important;
+  }
+}
+
 
 </style>
 </head>

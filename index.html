@@ -1,76 +1,193 @@
-/* Full-screen iPhone mode */
-html,
-body {
-  width: 100%;
-  height: 100%;
-  min-height: 0;
-  margin: 0 !important;
-  padding: 0 !important;
-  overflow: hidden !important;
-}
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#b7c8f3">
+<title>iPhone Simulator</title>
+<style>
+:root{--wallpaper:linear-gradient(145deg,#d6d9ff 0%,#b5d5f5 43%,#efc9e8 100%);--ink:#171923}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:radial-gradient(circle at 20% 10%,#e9e7ff,#a8b5d7 45%,#7f8ba8);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",Arial,sans-serif;display:flex;align-items:center;justify-content:center;padding:18px;color:var(--ink)}
+.layout{display:flex;align-items:center;justify-content:center;gap:28px;flex-wrap:wrap;width:100%}
+.phone{width:min(390px,94vw);height:min(820px,calc(100svh - 36px));min-height:600px;background:#111216;border:3px solid #45464c;border-radius:52px;padding:9px;box-shadow:0 28px 80px #25273c66;position:relative}
+.screen{height:100%;width:100%;overflow:hidden;border-radius:42px;position:relative;background:var(--wallpaper);display:flex;flex-direction:column}
+.status{height:36px;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:8px 24px 0;font-size:13px;font-weight:700;position:relative;z-index:5}
+.island{position:absolute;top:9px;left:50%;transform:translateX(-50%);width:104px;height:28px;border-radius:20px;background:#090a0d;z-index:6}
+.status-right{display:flex;gap:5px;align-items:center}.signal{font-size:12px}.battery{width:19px;height:10px;border:1.5px solid currentColor;border-radius:3px;position:relative}.battery:before{content:"";position:absolute;right:-3.5px;top:2px;height:4px;width:2px;background:currentColor;border-radius:1px}.battery:after{content:"";position:absolute;inset:1px 3px 1px 1px;background:currentColor;border-radius:1px}
+.content{flex:1;min-height:0;overflow:auto;position:relative}.home{height:100%;padding:22px 17px 14px;display:flex;flex-direction:column;justify-content:space-between}
+.datewidget{text-align:center;margin:10px 0 25px;text-shadow:0 1px 12px #fff5}.datewidget .date{font-size:14px;font-weight:600}.datewidget .bigtime{font-size:54px;font-weight:300;letter-spacing:-2px;line-height:1.1;margin-top:3px}
+.apps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px 9px}.app{border:0;background:none;padding:0;display:flex;align-items:center;flex-direction:column;gap:5px;color:#1b2030;font:inherit;min-width:0;cursor:pointer}.appicon{width:57px;height:57px;border-radius:15px;display:grid;place-items:center;color:white;box-shadow:0 3px 7px #3332;position:relative;overflow:hidden}.appicon svg{width:30px;height:30px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}.appname{font-size:11px;font-weight:500;text-shadow:0 1px 5px #fff8;white-space:nowrap}.dock{background:#ffffff69;border:1px solid #ffffff55;border-radius:26px;padding:10px 12px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:20px;backdrop-filter:blur(20px)}
+.appview{height:100%;background:#f5f5f9;color:#1d1d23;display:flex;flex-direction:column}.appbar{height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;flex-shrink:0}.back{border:0;background:none;color:#1684ff;font-size:15px;padding:8px 0;cursor:pointer}.appbar strong{font-size:16px}.appbody{padding:18px 17px;overflow:auto;flex:1}.homeindicator{height:25px;display:flex;justify-content:center;align-items:center;flex-shrink:0;z-index:10;cursor:pointer}.homeindicator span{width:110px;height:5px;border-radius:5px;background:#151515}.homeindicator.light span{background:#fff}
+.card{background:white;border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:0 1px 3px #0000000a}.row{display:flex;align-items:center;gap:12px}.muted{color:#85858d;font-size:13px}.field{width:100%;border:1px solid #dddde5;border-radius:12px;padding:12px;font:inherit;background:#fff;color:#222;outline-color:#1684ff}.btn{border:0;border-radius:12px;background:#1684ff;color:white;padding:12px 15px;font:inherit;font-weight:600;cursor:pointer}.btn:active,.app:active{transform:scale(.97)}.bubble{background:#28c760;color:white;padding:10px 13px;border-radius:18px 18px 4px 18px;max-width:85%;margin:8px 0 12px auto;overflow-wrap:anywhere}.settingsrow{display:flex;align-items:center;justify-content:space-between;padding:13px 0;border-bottom:1px solid #eee;font-size:15px}.settingleft{display:flex;align-items:center;gap:12px}.settingsicon{width:29px;height:29px;border-radius:8px;display:grid;place-items:center;color:white;font-size:16px}.calc{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:20px}.calc button{border:0;border-radius:50%;aspect-ratio:1;background:#e2e2e8;font-size:22px;cursor:pointer}.calc button.op{background:#ff9f0a;color:#fff}.calc button.dark{background:#55565e;color:#fff}.calcdisplay{text-align:right;font-size:43px;min-height:60px;overflow:hidden}.photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}.photo{aspect-ratio:1;border-radius:8px;background:linear-gradient(145deg,#f5b6cf,#b4c8fa,#c6f0dd)}.photo:nth-child(2n){background:linear-gradient(145deg,#f9d99b,#f4a4b7)}.photo:nth-child(3n){background:linear-gradient(145deg,#a5d8e8,#b3a7f3)}.control-overlay{position:absolute;inset:0;background:#10121bde;color:white;z-index:8;padding:54px 20px 25px;backdrop-filter:blur(28px);display:none}.control-overlay.show{display:block}.controlgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.controltile{background:#ffffff24;border-radius:18px;padding:18px;min-height:76px;cursor:pointer;border:0;color:white;text-align:left;font:inherit}.toast{position:absolute;top:45px;left:14px;right:14px;background:#ffffffdd;backdrop-filter:blur(18px);border-radius:22px;padding:14px;box-shadow:0 8px 28px #0002;z-index:7;display:none}.toast.show{display:block}.toast b{display:block;margin-bottom:4px}.helper{max-width:290px;color:#202338;font-size:14px;line-height:1.6}.helper h2{font-size:21px;margin:0 0 8px}.helper a{color:#155dcc}
+@media(max-height:680px){.phone{min-height:0;height:calc(100svh - 24px);border-radius:38px}.screen{border-radius:30px}.apps{gap:12px 8px}.appicon{width:48px;height:48px;border-radius:13px}.appicon svg{width:25px;height:25px}.datewidget{margin:2px 0 15px}.datewidget .bigtime{font-size:43px}}
+@media(max-width:500px){body{padding:0;background:#111}.layout{gap:0}.phone{width:100vw;height:100svh;min-height:0;border:0;border-radius:0;padding:0;box-shadow:none}.screen{border-radius:0}.helper{display:none}}
 
-body {
-  display: flex !important;
-  align-items: stretch !important;
-  justify-content: stretch !important;
-  background: #000 !important;
-}
+/* iOS-inspired additions */
+.lock-screen{position:absolute;inset:0;z-index:20;display:flex;flex-direction:column;align-items:center;color:white;background:var(--wallpaper);text-shadow:0 1px 8px #1b234455;padding:58px 22px 20px;transition:transform .42s cubic-bezier(.2,.8,.2,1),opacity .35s;touch-action:pan-y}
+.lock-screen.hidden{transform:translateY(-105%);opacity:.3;pointer-events:none}
+.lock-top{width:100%;display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:600}
+.lock-date{margin-top:52px;font-size:16px;font-weight:600}
+.lock-time{font-size:76px;font-weight:250;letter-spacing:-3px;line-height:1.05;margin-top:5px}
+.lock-widgets{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;margin-top:28px}
+.lock-widget{background:#ffffff30;border:1px solid #ffffff45;backdrop-filter:blur(18px);border-radius:20px;padding:13px;min-height:80px}
+.lock-bottom{margin-top:auto;width:100%;display:flex;align-items:center;justify-content:space-between}
+.lock-round{width:46px;height:46px;border:1px solid #ffffff55;border-radius:50%;background:#1d243844;color:white;font-size:20px;display:grid;place-items:center;cursor:pointer}
+.unlock-hint{font-size:12px;opacity:.9;text-align:center;position:absolute;bottom:27px;left:0;right:0;pointer-events:none}
+.switcher{position:absolute;inset:0;z-index:15;display:none;background:#151720b8;backdrop-filter:blur(25px);padding:65px 18px 38px;color:white;overflow:auto}
+.switcher.show{display:block;animation:fadeIn .2s ease-out}
+.switcher-card{background:#f5f5f9;color:#222;border-radius:25px;overflow:hidden;min-height:220px;box-shadow:0 12px 30px #0004}
+.switcher-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.switcher-preview{padding:20px;text-align:center;min-height:170px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
+.switcher-actions{display:flex;gap:8px;margin-top:12px}
+.switcher-actions button{flex:1}
+.wallpaper-options{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+.wallpaper-choice{height:84px;border-radius:15px;border:3px solid transparent;cursor:pointer;position:relative}
+.wallpaper-choice.selected{border-color:#1684ff;box-shadow:0 0 0 2px white inset}
+.wallpaper-choice span{position:absolute;bottom:6px;left:0;right:0;text-align:center;font-size:11px;color:#222;text-shadow:0 1px 3px #fff}
+.safari-top{position:sticky;top:0;background:#f5f5f9;padding:5px 0 12px;z-index:2}
+.safari-address{display:flex;gap:7px;align-items:center;background:#e6e6ed;border-radius:13px;padding:0 10px}
+.safari-address input{background:transparent;border:0;outline:0;min-width:0;flex:1;padding:12px 0;font:inherit;font-size:14px;color:#222}
+.safari-address button{border:0;background:transparent;color:#4b4b55;font-size:17px;cursor:pointer}
+.safari-favorites{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:24px 0}
+.safari-fav{border:0;background:transparent;display:flex;flex-direction:column;align-items:center;gap:7px;color:#222;font:inherit;font-size:11px;cursor:pointer}
+.safari-fav-icon{width:48px;height:48px;border-radius:14px;background:white;display:grid;place-items:center;font-size:23px;box-shadow:0 1px 5px #0001}
+.safari-toolbar{position:sticky;bottom:-18px;background:#f5f5f9;border-top:1px solid #e5e5eb;padding:13px 6px 2px;display:flex;justify-content:space-around;color:#1684ff}
+.safari-toolbar button{border:0;background:transparent;color:#1684ff;font-size:21px;cursor:pointer}
+@keyframes fadeIn{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
 
-.layout {
-  width: 100%;
-  height: 100%;
-  min-height: 0;
-  display: block;
-  margin: 0;
-  padding: 0;
-}
 
-.phone {
-  width: 100vw !important;
-  height: 100vh !important;
-  height: 100dvh !important;
-  max-width: none !important;
-  max-height: none !important;
-  min-width: 0 !important;
-  min-height: 0 !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-}
+/* Full-screen phone mode: no side instructions, phone fills the viewport */
+html, body { width:100%; height:100%; min-height:100%; margin:0!important; padding:0!important; overflow:hidden!important; }
+body { display:flex!important; align-items:stretch!important; justify-content:stretch!important; background:#000!important; }
+#phone, .phone, .device { width:100vw!important; height:100dvh!important; max-width:none!important; max-height:none!important; min-width:0!important; min-height:0!important; margin:0!important; border:0!important; border-radius:0!important; box-shadow:none!important; }
+#screen { width:100%!important; height:100%!important; min-height:0!important; border-radius:0!important; overflow:hidden!important; }
+.helper, .side-text, .instructions, .intro, .description { display:none!important; }
 
-.screen {
-  width: 100%;
-  height: 100%;
-  min-height: 0;
-  border-radius: 0 !important;
-  overflow: hidden;
-}
-
-.content {
-  flex: 1;
-  min-height: 0;
-  overscroll-behavior: contain;
-  -webkit-overflow-scrolling: touch;
-}
-
-.helper,
-.side-text,
-.instructions,
-.intro,
-.description {
-  display: none !important;
-}
-
-button,
-input,
-textarea {
-  touch-action: manipulation;
-}
-
-@supports (height: 100dvh) {
-  .phone {
-    height: 100dvh !important;
-  }
-}
+</style>
+</head>
+<body>
+<div class="layout">
+<div class="phone" aria-label="iPhone 시뮬레이터">
+<div class="screen" id="screen">
+<div class="status"><span id="statusTime">9:41</span><div class="island" id="island" title="다이내믹 아일랜드"></div><div class="status-right"><span class="signal">▮▮▮</span><span>⌁</span><span class="battery"></span></div></div>
+<div class="content" id="content"></div>
+<div class="homeindicator light" id="homeIndicator" title="홈 화면으로 돌아가기"><span></span></div>
+<div class="toast" id="notification"><b>🔔 알림</b><span id="notificationText">시뮬레이터 알림입니다.</span></div>
+<div class="control-overlay" id="control">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px"><strong style="font-size:25px">제어 센터</strong><button id="closeControl" class="btn" style="background:#ffffff30;padding:8px 12px">닫기</button></div>
+<div class="controlgrid">
+<button class="controltile" data-toggle="비행기 모드">✈️　비행기 모드<br><small id="airState">끔</small></button>
+<button class="controltile" data-toggle="Wi-Fi">◉　Wi-Fi<br><small id="wifiState">켬</small></button>
+<button class="controltile" data-toggle="블루투스">ᛒ　Bluetooth<br><small id="btState">켬</small></button>
+<button class="controltile" data-toggle="집중 모드">☾　집중 모드<br><small id="focusState">끔</small></button>
+</div>
+<div class="card" style="margin-top:14px;color:#222"><label for="bright">☀ 화면 밝기</label><input id="bright" type="range" min="35" max="100" value="100" style="width:100%"></div>
+<div class="card" style="color:#222;cursor:pointer" id="controlNotify">🔔 테스트 알림 표시</div>
+</div>
+</div>
+<div class="lock-screen" id="lockScreen">
+  <div class="lock-top"><span id="lockStatusTime">9:41</span><span>▮▮▮　⌁　▰</span></div>
+  <div class="lock-date" id="lockDate">일요일, 10월 18일</div>
+  <div class="lock-time" id="lockClock">9:41</div>
+  <div class="lock-widgets">
+    <div class="lock-widget"><div style="font-size:12px;opacity:.9">날씨</div><div style="font-size:25px;margin-top:7px">☀️ 24°</div><div style="font-size:11px">맑음 · 예시 데이터</div></div>
+    <div class="lock-widget"><div style="font-size:12px;opacity:.9">다음 일정</div><div style="font-size:14px;font-weight:600;margin-top:8px">오늘의 계획</div><div style="font-size:11px">일정을 추가해 보세요</div></div>
+  </div>
+  <div class="lock-bottom">
+    <button class="lock-round" id="lockFlash" aria-label="손전등">◉</button>
+    <button class="lock-round" id="lockCamera" aria-label="카메라">▣</button>
+  </div>
+  <div class="unlock-hint">위로 쓸어올려 잠금 해제　⌃</div>
+</div>
+<div class="switcher" id="switcher">
+  <div class="switcher-head"><strong style="font-size:24px">앱 전환기</strong><button class="btn" id="closeSwitcher" style="background:#ffffff30">닫기</button></div>
+  <div class="switcher-card"><div class="switcher-preview"><div id="switcherIcon" style="font-size:42px">📱</div><strong id="switcherName">홈 화면</strong><div class="muted">최근 사용한 화면</div></div></div>
+  <div class="switcher-actions"><button class="btn" id="switcherResume">앱으로 돌아가기</button><button class="btn" id="switcherHome" style="background:#737782">홈 화면</button></div>
+  <p style="font-size:12px;opacity:.8;margin-top:18px">아래 홈 막대를 위로 쓸어올려 앱 전환기를 열 수 있어요.</p>
+</div>
+</div>
+<div class="helper"><h2>iPhone 웹 시뮬레이터</h2><p>앱 아이콘을 눌러 실행하고, 아래 홈 막대로 홈 화면에 돌아가 보세요.</p><p>화면 위쪽 상태 표시줄을 누르면 제어 센터가 열리고, 다이내믹 아일랜드를 누르면 테스트 알림을 볼 수 있어요.</p><p><b>참고:</b> 실제 iOS가 아닌 브라우저에서 작동하는 모형입니다.</p></div>
+</div>
+<script>
+const icons={
+'전화':['#35c96b','<path d="M7 3 4 5c0 8 7 15 15 15l2-3-5-3-2 2c-3-1-4-2-5-5l2-2z"/>'],
+'메시지':['#31c866','<path d="M5 5h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-7l-5 3v-3H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/><path d="M7 10h10M7 13h7"/>'],
+'사진':['#f2b2d0','<circle cx="15" cy="9" r="3" stroke="#fff"/><path d="M3 17l5-5 3 3 2-2 8 7H3z" stroke="#fff"/>'],
+'카메라':['#5b5e69','<path d="M3 8h4l2-3h6l2 3h4v11H3z"/><circle cx="12" cy="13" r="4"/>'],
+'설정':['#898d96','<circle cx="12" cy="12" r="3"/><path d="M19 13.5l2 1-2 3-2-1-2 1v2h-4v-2l-2-1-2 1-2-3 2-1v-3l-2-1 2-3 2 1 2-1V5h4v2l2 1 2-1 2 3-2 1z"/>'],
+'메모':['#f3d34a','<path d="M6 3h12v18H6z"/><path d="M9 8h6M9 12h6M9 16h4" stroke="#6a5c28"/>'],
+'음악':['#f05b74','<path d="M10 18V5l9-2v13"/><circle cx="7" cy="18" r="3"/><circle cx="16" cy="16" r="3"/>'],
+'시계':['#30323a','<circle cx="12" cy="12" r="9"/><path d="M12 6v6l4 2"/>'],
+'날씨':['#53a8ef','<circle cx="9" cy="9" r="4"/><path d="M9 2v2M2 9h2M4 4l1.5 1.5M16 15a4 4 0 0 0 0-8 5 5 0 0 0-9 2 3 3 0 0 0 0 6z"/>'],
+'지도':['#56bd86','<path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3z"/><path d="M9 3v15M15 6v15"/>'],
+'캘린더':['#fff','<rect x="3" y="5" width="18" height="16" rx="3" stroke="#e64c4c"/><path d="M3 10h18M8 3v4M16 3v4" stroke="#e64c4c"/>'],
+'계산기':['#454751','<rect x="4" y="3" width="16" height="18" rx="3"/><path d="M7 7h10M8 12h1M12 12h1M16 12h1M8 16h1M12 16h1M16 16h1"/>'],
+'앱 스토어':['#4e9be9','<path d="m7 5 10 14M17 5 7 19M4 15h16"/>'],
+'브라우저':['#48a8ef','<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c5 6 5 12 0 18M12 3c-5 6-5 12 0 18"/>'],
+'건강':['#f16c78','<path d="M12 20S3 14 3 8a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 6-9 12-9 12z"/>'],
+'팟캐스트':['#9a7ae8','<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 15v5"/>']
+};
+const allApps=['메시지','사진','카메라','설정','메모','음악','시계','날씨','지도','캘린더','계산기','앱 스토어','브라우저','건강','팟캐스트','전화'];
+const dockApps=['전화','브라우저','메시지','음악'];let current='홈', notes=localStorage.getItem('simNotes')||'',sentMessages=[],calcVal='0',calcPrev=null,calcOp=null,calcNew=true, toggles={'비행기 모드':false,'Wi-Fi':true,'블루투스':true,'집중 모드':false};
+const content=document.getElementById('content'),indicator=document.getElementById('homeIndicator'),control=document.getElementById('control');
+function icon(name){let [bg,svg]=icons[name]||['#777','<rect x="4" y="4" width="16" height="16" rx="4"/>'];return `<span class="appicon" style="background:${bg}">${name==='캘린더'?'<span style="position:absolute;top:5px;color:#e34b4b;font-size:8px;font-weight:bold">일</span>':''}<svg viewBox="0 0 24 24">${svg}</svg>${name==='캘린더'?'<b style="font-size:22px;color:#333;position:absolute;top:13px">18</b>':''}</span>`}
+function appButton(name){return `<button class="app" data-app="${name}">${icon(name)}<span class="appname">${name}</span></button>`}
+function renderHome(){current='홈';indicator.classList.add('light');content.innerHTML=`<div class="home"><div><div class="datewidget"><div class="date" id="dateLine">일요일, 10월 18일</div><div class="bigtime" id="homeClock">9:41</div></div><div class="apps">${allApps.filter(a=>!dockApps.includes(a)).slice(0,12).map(appButton).join('')}</div></div><div class="dock">${dockApps.map(appButton).join('')}</div></div>`;document.querySelectorAll('[data-app]').forEach(b=>b.onclick=()=>openApp(b.dataset.app));updateClock()}
+function appShell(name,body){current=name;indicator.classList.remove('light');content.innerHTML=`<div class="appview"><div class="appbar"><button class="back" id="back">‹ 홈</button><strong>${name}</strong><span style="width:38px"></span></div><div class="appbody">${body}</div></div>`;document.getElementById('back').onclick=renderHome}
+function openApp(name){if(name==='메시지')return renderMessages();if(name==='메모')return renderNotes();if(name==='설정')return renderSettings();if(name==='계산기')return renderCalc();if(name==='사진')return appShell(name,`<h2>사진 보관함</h2><p class="muted">시뮬레이션 사진</p><div class="photo-grid">${Array.from({length:15},(_,i)=>`<div class="photo" title="사진 ${i+1}"></div>`).join('')}</div>`);if(name==='카메라')return appShell(name,`<div style="background:#1d1d23;color:white;border-radius:18px;min-height:390px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:22px"><div style="font-size:14px">카메라 미리보기</div><div style="width:70px;height:70px;border:5px solid white;border-radius:50%"></div><button class="btn" onclick="notify('카메라','사진 촬영은 시뮬레이션입니다.')">● 촬영</button></div>`);if(name==='음악')return renderMusic();if(name==='시계')return appShell(name,`<div style="text-align:center;padding:30px 0"><div style="font-size:50px">◷</div><div style="font-size:42px;font-weight:300">${new Date().toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'})}</div><p class="muted">알람</p><button class="btn" onclick="notify('시계','테스트 알람이 설정되었습니다.')">＋ 알람 추가</button></div>`);if(name==='날씨')return appShell(name,`<div style="text-align:center;padding:24px"><div style="font-size:60px">🌤️</div><div style="font-size:54px;font-weight:300">24°</div><div>맑음</div><p class="muted">예시 날씨 · 실제 기상 데이터 아님</p></div>`);if(name==='지도')return appShell(name,`<div style="background:linear-gradient(30deg,#c7e0c5,#e8e6ce,#c4d9ed);border-radius:16px;height:350px;display:grid;place-items:center;font-size:42px">📍<div style="font-size:14px">지도 미리보기</div></div>`);if(name==='캘린더')return appShell(name,`<div class="card" style="text-align:center"><div style="color:#ef4b4b;font-weight:700">10월</div><div style="font-size:60px">18</div><div>일요일</div></div><div class="card">오늘 일정 없음</div>`);if(name==='브라우저')return renderSafari();if(name==='앱 스토어')return appShell(name,`<h2>앱 스토어</h2><div class="card">추천 앱</div><div class="card">게임과 생산성</div><p class="muted">실제 앱 설치는 지원하지 않는 시뮬레이션입니다.</p>`);if(name==='건강')return appShell(name,`<div style="text-align:center;font-size:55px;color:#ef6a79">♡</div><div class="card">오늘의 활동</div><div class="card">걸음 수　—</div>`);if(name==='팟캐스트')return appShell(name,`<div style="text-align:center;padding:30px;font-size:60px">🎙️</div><div class="card">새로운 에피소드</div>`);if(name==='전화')return renderPhone();appShell(name,`<h2>${name}</h2><p>이 앱은 시뮬레이션 화면입니다.</p>`)}
+function renderMessages(){appShell('메시지',`<div class="card"><div class="row"><div style="width:42px;height:42px;background:#56b9ed;border-radius:50%;display:grid;place-items:center;color:white;font-size:21px">●</div><div><b>메시지</b><div class="muted">시뮬레이션 대화</div></div></div></div><div id="messages">${sentMessages.map(m=>`<div class="bubble">${escapeHtml(m)}</div>`).join('')}</div><form id="msgForm" style="display:flex;gap:7px;position:sticky;bottom:0"><input id="msgInput" class="field" placeholder="iMessage" autocomplete="off"><button class="btn">↑</button></form>`);document.getElementById('msgForm').onsubmit=e=>{e.preventDefault();let v=document.getElementById('msgInput').value.trim();if(v){sentMessages.push(v);renderMessages()}}}
+function renderNotes(){appShell('메모',`<textarea id="noteText" class="field" style="height:65vh;resize:none;border:0;background:transparent;line-height:1.7" placeholder="메모를 입력하세요...">${escapeHtml(notes)}</textarea><div class="muted" id="saved">이 기기에 자동 저장</div>`);document.getElementById('noteText').oninput=e=>{notes=e.target.value;localStorage.setItem('simNotes',notes);document.getElementById('saved').textContent='저장됨'}}
+function renderSettings(){appShell('설정',`<div class="card" style="text-align:center"><div style="font-size:42px">👤</div><b>Apple 계정</b><div class="muted">시뮬레이션 사용자</div></div><div class="card">${[['비행기 모드','✈️','#ff9f0a'],['Wi-Fi','◉','#1684ff'],['블루투스','ᛒ','#1684ff'],['알림','♧','#ff453a'],['집중 모드','☾','#8e8e93']].map(([n,ico,c])=>`<div class="settingsrow"><div class="settingleft"><span class="settingsicon" style="background:${c}">${ico}</span>${n}</div><button class="btn" style="padding:6px 10px;background:${toggles[n]?'#31c866':'#b7b7bf'}" onclick="toggleSetting('${n}');renderSettings()">${toggles[n]?'켬':'끔'}</button></div>`).join('')}</div><div class="card"><b>배경화면</b><div class="muted" style="margin-top:4px">잠금 화면과 홈 화면의 분위기를 바꿔 보세요.</div><div class="wallpaper-options">${wallpapers.map((w,i)=>`<button class="wallpaper-choice ${wallpaperIndex===i?'selected':''}" data-wallpaper="${i}" style="background:${w.css}" aria-label="${w.name} 배경화면"><span>${w.name}</span></button>`).join('')}</div></div><div class="card"><label>화면 밝기</label><input type="range" min="35" max="100" value="100" style="width:100%" oninput="document.getElementById('screen').style.filter='brightness('+this.value/100+')'"></div><div class="muted">실제 iOS 설정과 연결되지 않은 시뮬레이션입니다.</div>`);document.querySelectorAll('[data-wallpaper]').forEach(b=>b.onclick=()=>{setWallpaper(Number(b.dataset.wallpaper));renderSettings()})}
+function toggleSetting(n){toggles[n]=!toggles[n]}
+function renderCalc(){appShell('계산기',`<div class="calcdisplay" id="calcDisplay">${calcVal}</div><div class="calc">${['AC','±','%','÷','7','8','9','×','4','5','6','−','1','2','3','+','⌫','0','.','='].map((k,i)=>`<button class="${['÷','×','−','+','='].includes(k)?'op':['AC','±','%','⌫'].includes(k)?'dark':''}" onclick="calcPress('${k}')">${k}</button>`).join('')}</div>`)}
+function calcPress(k){if(k==='AC'){calcVal='0';calcPrev=null;calcOp=null;calcNew=true}else if(k==='⌫'){calcVal=calcVal.length>1?calcVal.slice(0,-1):'0'}else if(k==='±'){calcVal=String(-Number(calcVal))}else if(k==='%'){calcVal=String(Number(calcVal)/100)}else if(['+','−','×','÷'].includes(k)){calcPrev=Number(calcVal);calcOp=k;calcNew=true}else if(k==='='){if(calcPrev!==null&&calcOp){let a=calcPrev,b=Number(calcVal);calcVal=String(calcOp==='+'?a+b:calcOp==='−'?a-b:calcOp==='×'?a*b:b===0?'오류':a/b);calcPrev=null;calcOp=null;calcNew=true}}else if(k==='.'){if(!calcVal.includes('.'))calcVal+='.'}else{calcVal=calcNew?k:calcVal==='0'?k:calcVal+k;calcNew=false}document.getElementById('calcDisplay').textContent=calcVal}
+function renderMusic(){appShell('음악',`<div style="text-align:center;padding:18px 0"><div style="width:210px;height:210px;border-radius:24px;margin:auto;background:linear-gradient(135deg,#f9a7c9,#b8a7f8,#8bd5db);display:grid;place-items:center;font-size:65px">♫</div><h2>나의 플레이리스트</h2><div class="muted">시뮬레이션 트랙</div><input id="progress" type="range" min="0" max="100" value="15" style="width:100%;margin-top:20px"><div style="display:flex;justify-content:space-around;align-items:center;font-size:28px;margin-top:20px"><button onclick="notify('음악','이전 트랙')" style="border:0;background:none;font-size:25px">◀◀</button><button id="play" onclick="this.textContent=this.textContent==='▶'?'Ⅱ':'▶'" style="border:0;background:none;font-size:35px">▶</button><button onclick="notify('음악','다음 트랙')" style="border:0;background:none;font-size:25px">▶▶</button></div></div>`)}
+function renderPhone(){appShell('전화',`<div style="text-align:center;padding:18px"><div class="muted" id="dial">번호 입력</div><div style="font-size:32px;min-height:48px;margin:12px" id="dialNum"></div><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:15px;max-width:270px;margin:auto">${['1','2','3','4','5','6','7','8','9','*','0','#'].map(n=>`<button onclick="document.getElementById('dialNum').textContent+= '${n}'" style="border:0;border-radius:50%;width:64px;height:64px;background:#e4e4ea;font-size:24px">${n}</button>`).join('')}</div><button class="btn" style="margin-top:20px;background:#31c866" onclick="notify('전화','이 시뮬레이터에서는 실제 전화를 걸 수 없습니다.')">📞 통화</button></div>`)}
+const wallpapers=[
+{name:'블루',css:'linear-gradient(145deg,#d6d9ff 0%,#b5d5f5 43%,#efc9e8 100%)'},
+{name:'퍼플',css:'radial-gradient(circle at 25% 20%,#ffd8f2,#b8a5f7 45%,#6d70c9 100%)'},
+{name:'선셋',css:'linear-gradient(150deg,#ffcfad,#f59bb3 48%,#6e80c7)'},
+{name:'민트',css:'linear-gradient(145deg,#d9f7df,#91d8d0 50%,#b7c8f3)'},
+{name:'다크',css:'linear-gradient(145deg,#383a5b,#171827 55%,#55506f)'},
+{name:'오로라',css:'radial-gradient(ellipse at 20% 15%,#9be6d3,transparent 45%),linear-gradient(145deg,#8ca7e9,#b8a5e8 60%,#f4c7df)'}
+];
+let wallpaperIndex=0, safariHistory=[], safariIndex=-1, currentSafariUrl='';
+function setWallpaper(i){wallpaperIndex=i;document.documentElement.style.setProperty('--wallpaper',wallpapers[i].css);document.getElementById('screen').style.background=wallpapers[i].css;localStorage.setItem('simWallpaper',String(i))}
+function unlock(){document.getElementById('lockScreen').classList.add('hidden');locked=false;renderHome()}
+let locked=true;
+function lockPhone(){locked=true;document.getElementById('switcher').classList.remove('show');control.classList.remove('show');document.getElementById('lockScreen').classList.remove('hidden');updateClock()}
+function updateLockClock(){const d=new Date();const t=d.toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit',hour12:false});document.getElementById('lockClock').textContent=t;document.getElementById('lockStatusTime').textContent=t;document.getElementById('lockDate').textContent=d.toLocaleDateString('ko-KR',{weekday:'long',month:'long',day:'numeric'}).replace(' ',' · ')}
+function showSwitcher(){if(locked)return;control.classList.remove('show');document.getElementById('switcherName').textContent=current==='홈'?'홈 화면':current;const a=icons[current];document.getElementById('switcherIcon').textContent=current==='홈'?'📱':({'메시지':'💬','사진':'🌄','설정':'⚙️','메모':'📝','음악':'🎵','브라우저':'🧭','전화':'📞','계산기':'🧮'}[current]||'📲');document.getElementById('switcher').classList.add('show')}
+function renderSafari(){current='브라우저';indicator.classList.remove('light');const homePage=`<div class="safari-top"><div class="safari-address"><span>🔒</span><input id="safariAddress" placeholder="검색 또는 웹사이트 이름 입력" value="${escapeHtml(currentSafariUrl)}"><button id="safariReload" title="새로고침">↻</button></div></div><div style="padding:8px 3px"><div style="font-size:28px;font-weight:700;margin:22px 0 4px">즐겨찾기</div><div class="muted">자주 방문하는 사이트</div><div class="safari-favorites">${[['Google','G','https://www.google.com'],['YouTube','▶','https://www.youtube.com'],['Wikipedia','W','https://ko.wikipedia.org'],['Apple','●','https://www.apple.com']].map(([n,ico,url])=>`<button class="safari-fav" data-fav="${url}"><span class="safari-fav-icon">${ico}</span><span>${n}</span></button>`).join('')}</div><div class="card"><b>Safari 시작 페이지</b><p class="muted">주소를 입력하거나 즐겨찾기를 눌러 사이트를 새 탭에서 열 수 있어요.</p><button class="btn" id="safariSearch" style="width:100%">웹 검색</button></div><div class="muted">이 시뮬레이션은 실제 Safari가 아니며 방문 기록은 실제 Safari와 공유되지 않습니다.</div></div><div class="safari-toolbar"><button id="safariBack" title="뒤로">‹</button><button id="safariForward" title="앞으로">›</button><button id="safariShare" title="공유">↑</button><button id="safariTabs" title="탭">▢</button></div>`;
+appShell('브라우저',homePage);
+const addr=document.getElementById('safariAddress');addr.addEventListener('keydown',e=>{if(e.key==='Enter')safariGo(addr.value)});document.getElementById('safariSearch').onclick=()=>safariGo(addr.value||'https://www.google.com');document.getElementById('safariReload').onclick=()=>{if(currentSafariUrl)safariGo(currentSafariUrl)};document.querySelectorAll('[data-fav]').forEach(b=>b.onclick=()=>safariGo(b.dataset.fav));document.getElementById('safariBack').onclick=()=>{if(safariIndex>0){safariIndex--;safariGo(safariHistory[safariIndex],false)}};document.getElementById('safariForward').onclick=()=>{if(safariIndex<safariHistory.length-1){safariIndex++;safariGo(safariHistory[safariIndex],false)}};document.getElementById('safariShare').onclick=()=>notify('공유',currentSafariUrl||'공유할 사이트를 먼저 열어 주세요.');document.getElementById('safariTabs').onclick=()=>notify('탭 보기','현재 열린 시뮬레이션 탭 1개');}
+function safariGo(raw,addHistory=true){let v=(raw||'').trim();if(!v)return;if(!/^https?:\/\//i.test(v)){if(v.includes('.')&&!v.includes(' '))v='https://'+v;else v='https://www.google.com/search?q='+encodeURIComponent(v)}currentSafariUrl=v;if(addHistory){safariHistory=safariHistory.slice(0,safariIndex+1);safariHistory.push(v);safariIndex=safariHistory.length-1}renderSafari();notify('Safari','사이트를 새 탭에서 열고 있습니다.');window.open(v,'_blank','noopener')}
+function searchSite(){let v=document.getElementById('urlInput').value.trim();if(v){if(!/^https?:\/\//i.test(v))v='https://'+v;window.open(v,'_blank','noopener')}}
+function notify(title,body){const el=document.getElementById('notification');el.querySelector('b').textContent='🔔 '+title;document.getElementById('notificationText').textContent=body;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),3500)}
+function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function updateClock(){const d=new Date();const t=d.toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit',hour12:false});document.getElementById('statusTime').textContent=t;const hc=document.getElementById('homeClock');if(hc)hc.textContent=t;const dl=document.getElementById('dateLine');if(dl)dl.textContent=d.toLocaleDateString('ko-KR',{weekday:'long',month:'long',day:'numeric'}).replace(' ',' · ')}
+document.getElementById('homeIndicator').onclick=()=>{control.classList.remove('show');renderHome()};
+document.getElementById('island').onclick=()=>notify('다이내믹 아일랜드','여기를 눌러 알림을 확인할 수 있어요.');
+document.querySelector('.status').addEventListener('click',e=>{if(e.target.id!=='island')control.classList.add('show')});
+document.getElementById('closeControl').onclick=()=>control.classList.remove('show');
+document.querySelectorAll('[data-toggle]').forEach(b=>b.onclick=()=>{let n=b.dataset.toggle;toggles[n]=!toggles[n];let states={'비행기 모드':'airState','Wi-Fi':'wifiState','블루투스':'btState','집중 모드':'focusState'};document.getElementById(states[n]).textContent=toggles[n]?'켬':'끔'});
+document.getElementById('bright').oninput=e=>document.getElementById('screen').style.filter=`brightness(${e.target.value/100})`;
+document.getElementById('controlNotify').onclick=()=>{control.classList.remove('show');notify('테스트 알림','제어 센터에서 만든 테스트 알림입니다.')};
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){control.classList.remove('show');renderHome()}});
+const savedWallpaper=Number(localStorage.getItem('simWallpaper'));if(Number.isInteger(savedWallpaper)&&savedWallpaper>=0&&savedWallpaper<wallpapers.length)setWallpaper(savedWallpaper);
+document.getElementById('lockScreen').addEventListener('click',e=>{if(e.target.id!=='lockFlash'&&e.target.id!=='lockCamera')unlock()});
+document.getElementById('lockFlash').onclick=()=>notify('손전등','손전등 버튼은 모형입니다.');
+document.getElementById('lockCamera').onclick=()=>{unlock();openApp('카메라')};
+document.getElementById('closeSwitcher').onclick=()=>document.getElementById('switcher').classList.remove('show');
+document.getElementById('switcherResume').onclick=()=>{document.getElementById('switcher').classList.remove('show');if(current==='홈')renderHome();else openApp(current)};
+document.getElementById('switcherHome').onclick=()=>{document.getElementById('switcher').classList.remove('show');renderHome()};
+let touchStartY=0,touchStartX=0,touchStartTime=0;
+document.getElementById('screen').addEventListener('touchstart',e=>{const t=e.changedTouches[0];touchStartY=t.clientY;touchStartX=t.clientX;touchStartTime=Date.now()},{passive:true});
+document.getElementById('screen').addEventListener('touchend',e=>{const t=e.changedTouches[0],dy=t.clientY-touchStartY,dx=t.clientX-touchStartX,elapsed=Date.now()-touchStartTime;const r=document.getElementById('screen').getBoundingClientRect(),fromTop=touchStartY-r.top,fromBottom=r.bottom-touchStartY;if(locked&&dy < -45){unlock();return}if(locked)return;if(fromTop<55&&dy>55){control.classList.add('show');return}if(fromBottom<38&&dy < -55){showSwitcher();return}if(document.getElementById('switcher').classList.contains('show')&&dy>45){document.getElementById('switcher').classList.remove('show');renderHome()}},{passive:true});
+document.getElementById('homeIndicator').addEventListener('dblclick',showSwitcher);
+document.getElementById('homeIndicator').addEventListener('contextmenu',e=>{e.preventDefault();showSwitcher()});
+document.getElementById('closeControl').insertAdjacentHTML('beforebegin','<button class="btn" id="lockButton" style="background:#ffffff30;padding:8px 12px;margin-right:6px">🔒 잠금</button>');
+document.getElementById('lockButton').onclick=()=>{control.classList.remove('show');lockPhone()};
+renderHome();updateLockClock();setInterval(()=>{updateClock();updateLockClock()},10000);
+</script>
+</body></html>
